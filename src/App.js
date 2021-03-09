@@ -1,24 +1,55 @@
-import logo from './logo.svg';
+
+import React, {useState} from 'react'
 import './App.css';
+import {Container, Button, Form, FormInput} from 'shards-react';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "shards-ui/dist/css/shards.min.css"
 
 function App() {
+    //Setup our To-Do list
+    const [toDoList, setToDoList] = useState([
+    ]);
+    //Set up our Input-Value/
+    const [value, setValue]= useState('');
+
+    //Handle the submit of the form
+    const handleSubmit= (e) => {
+      e.preventDefault();
+      addToDo(value);
+      setValue('');
+    }
+    //Add To-Do
+    const addToDo = (text)=> {
+     const updatedToDoList= [...toDoList, {text}]
+     setToDoList(updatedToDoList);
+    }
+    //Delete To-Do
+
+   
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <h1>To Do List</h1>
+      <Container className='toDoList' >
+        {toDoList.map((item,index)=>(
+          <div key={index}>
+              <span>{item.text}</span>
+              <Button>Delete</Button>
+          </div>
+        ))}
+      </Container>
+
+      <Container className='toDoInput'>
+          <Form onSubmit={handleSubmit}>
+            <FormInput
+            placeholder='Type to Do Here'
+            value={value}
+            onChange={e=>setValue(e.target.value)}
+            />
+            <Button type='submit'>Add-to-do</Button>
+          </Form>
+      </Container>
+    </Container>
   );
 }
 
