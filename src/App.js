@@ -24,8 +24,11 @@ function App() {
      setToDoList(updatedToDoList);
     }
     //Delete To-Do
-
-   
+    const handleDelete = (item)=>{
+      const filteredToDo= toDoList.filter(currentValue=>(currentValue !== item));
+      setToDoList(filteredToDo);
+    }
+    
 
   return (
     <Container>
@@ -34,7 +37,7 @@ function App() {
         {toDoList.map((item,index)=>(
           <div key={index}>
               <span>{item.text}</span>
-              <Button>Delete</Button>
+              <Button onClick={()=>handleDelete(item)} >Delete</Button>
           </div>
         ))}
       </Container>
